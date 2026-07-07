@@ -49,5 +49,30 @@ python3 -m http.server 8000
 3. Select the main branch and `/ (root)`, then save
 4. The site goes live at `https://<username>.github.io/Sammytech/` within a minute or two
 
-A custom domain (e.g. `sammytechplumbing.ng`) can be pointed at GitHub Pages later from
-the same settings page — update the `canonical` URL in `index.html` when you do.
+## When you buy your domain — SEO checklist
+
+The site currently uses `https://sammytechplumbing.ng` as a placeholder domain in its
+SEO tags. After buying the real domain:
+
+1. **Search-and-replace** `https://sammytechplumbing.ng` with your domain in three files:
+   `index.html`, `robots.txt`, and `sitemap.xml` (it appears in the canonical link,
+   Open Graph/Twitter tags, both structured-data blocks, and the sitemap).
+2. **Point the domain at GitHub Pages** from Settings → Pages → Custom domain
+   (or at whatever host you choose), and enable "Enforce HTTPS".
+3. **Register with Google**: add the site to [Google Search Console](https://search.google.com/search-console),
+   verify ownership, and submit `sitemap.xml`. This gets you indexed within days.
+4. **Create a Google Business Profile** (free, at business.google.com) with the same
+   name, phone and Trans-Ekulu address — this is the single biggest boost for
+   "plumber near me" searches in Enugu, and the website link feeds it.
+5. Update `lastmod` in `sitemap.xml` whenever you make significant changes.
+
+### What's already optimized
+
+- Title/description tuned for "plumber Enugu / Trans-Ekulu" searches, covering both
+  "Sammy-Tech" and "Sammy Tech" spellings
+- Schema.org `Plumber` structured data (services, areas, hours, geo coordinates) and
+  `FAQPage` structured data for rich results in Google
+- Open Graph + Twitter cards, so links shared on WhatsApp/Facebook show a proper
+  preview with the flyer image
+- Geo meta tags, `robots.txt`, `sitemap.xml`, semantic headings, image alt text,
+  mobile-friendly and fast (no frameworks) — all ranking signals Google checks
