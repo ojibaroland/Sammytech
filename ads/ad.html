@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sammy-Tech Plumbing — Video Ad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ============ 540x960 stage (rendered at 2x = 1080x1920) ============ */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --gold-100: #f7ecc4;
+    --gold-300: #f0d98c;
+    --gold-400: #e3c463;
+    --gold-500: #c9a227;
+    --gold-600: #a88414;
+    --cream: #f7f0df;
+    --cream-dim: #cfc3a8;
+    --wood-950: #120c06;
+    --wood-900: #1b120a;
+    --wood-800: #2a1c10;
+    --wa: #22c15e;
+  }
+
+  html, body { width: 540px; height: 960px; overflow: hidden; background: #000; }
+
+  .stage {
+    position: relative;
+    width: 540px; height: 960px;
+    overflow: hidden;
+    font-family: "Jost", sans-serif;
+    color: var(--cream);
+    background:
+      repeating-linear-gradient(93deg, transparent 0 70px, rgba(0,0,0,0.18) 70px 72px),
+      linear-gradient(165deg, var(--wood-800), var(--wood-950) 75%);
+  }
+
+  /* Drifting gold glow, alive for the whole video */
+  .glow {
+    position: absolute; inset: -20%;
+    background:
+      radial-gradient(ellipse 55% 35% at 30% 20%, rgba(227,196,99,0.20), transparent 70%),
+      radial-gradient(ellipse 45% 30% at 75% 85%, rgba(201,162,39,0.14), transparent 70%);
+    animation: glowDrift 24s ease-in-out both;
+  }
+  @keyframes glowDrift {
+    0%   { transform: translate(0,0) }
+    50%  { transform: translate(4%,3%) }
+    100% { transform: translate(-2%,-2%) }
+  }
+
+  /* Gold frame border, always on */
+  .frame {
+    position: absolute; inset: 22px;
+    border: 1.5px solid rgba(227,196,99,0.38);
+    border-radius: 20px;
+    pointer-events: none;
+  }
+  .frame::before {
+    content: ""; position: absolute; inset: 6px;
+    border: 1px solid rgba(227,196,99,0.18);
+    border-radius: 14px;
+  }
+
+  .scene {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 70px 44px;
+    opacity: 0;
+  }
+
+  .serif { font-family: "Cormorant Garamond", serif; }
+
+  .gold-text {
+    background: linear-gradient(120deg, var(--gold-100), var(--gold-400) 45%, var(--gold-600));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+
+  /* ============ generic keyframes ============ */
+  @keyframes fadeIn   { from { opacity: 0 } to { opacity: 1 } }
+  @keyframes fadeOut  { from { opacity: 1 } to { opacity: 0 } }
+  @keyframes riseIn   { from { opacity: 0; transform: translateY(46px) } to { opacity: 1; transform: none } }
+  @keyframes slideIn  { from { opacity: 0; transform: translateX(-60px) } to { opacity: 1; transform: none } }
+  @keyframes popIn {
+    0%   { opacity: 0; transform: scale(0.55) }
+    70%  { opacity: 1; transform: scale(1.07) }
+    100% { opacity: 1; transform: scale(1) }
+  }
+  @keyframes ringIn {
+    0%   { opacity: 0; transform: scale(0.4) rotate(-14deg) }
+    65%  { opacity: 1; transform: scale(1.06) rotate(2deg) }
+    100% { opacity: 1; transform: scale(1) rotate(0) }
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1) }
+    50%      { transform: scale(1.055) }
+  }
+  @keyframes dropWobble {
+    0%, 100% { transform: translateY(0) }
+    50%      { transform: translateY(-14px) }
+  }
+  @keyframes trackIn {
+    from { opacity: 0; letter-spacing: 0.55em; }
+    to   { opacity: 1; letter-spacing: 0.14em; }
+  }
+
+  /* ============================================================
+     SCENE 1 — HOOK (0.0s – 4.5s)
+     ============================================================ */
+  #s1 { animation: fadeIn 0.45s ease 0.05s both, fadeOut 0.45s ease 4.05s both; }
+
+  #s1 .drop {
+    width: 120px; height: 120px; margin-bottom: 40px;
+    animation: popIn 0.8s cubic-bezier(.2,1.4,.4,1) 0.25s both,
+               dropWobble 2.2s ease-in-out 1.05s infinite both;
+  }
+  #s1 .drop svg { width: 100%; height: 100%; fill: var(--gold-400); filter: drop-shadow(0 0 26px rgba(227,196,99,0.55)); }
+
+  #s1 h2 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 58px; font-weight: 600; line-height: 1.22;
+    color: var(--cream);
+  }
+  #s1 .l1 { animation: riseIn 0.65s cubic-bezier(.2,.9,.3,1) 0.55s both; }
+  #s1 .l2 { animation: riseIn 0.65s cubic-bezier(.2,.9,.3,1) 1.45s both; }
+  #s1 .l3 { animation: riseIn 0.65s cubic-bezier(.2,.9,.3,1) 2.35s both; margin-top: 10px; }
+  #s1 .l3 em { font-style: italic; }
+
+  /* ============================================================
+     SCENE 2 — MESSAGE (4.5s – 7.8s)
+     ============================================================ */
+  #s2 { animation: fadeIn 0.45s ease 4.5s both, fadeOut 0.45s ease 7.35s both; }
+  #s2 h2 {
+    font-family: "Cormorant Garamond", serif;
+    white-space: nowrap;
+    font-size: 56px; font-weight: 600; line-height: 1.18;
+  }
+  #s2 .m1 { animation: riseIn 0.7s cubic-bezier(.2,.9,.3,1) 4.75s both; color: var(--cream-dim); }
+  #s2 .m2 { animation: riseIn 0.7s cubic-bezier(.2,.9,.3,1) 5.65s both; margin-top: 14px; font-size: 70px; font-style: italic; }
+
+  /* ============================================================
+     SCENE 3 — BRAND REVEAL (7.8s – 12.4s)
+     ============================================================ */
+  #s3 { animation: fadeIn 0.4s ease 7.85s both, fadeOut 0.45s ease 11.95s both; }
+
+  #s3 .ring {
+    width: 190px; height: 190px;
+    border: 3px solid var(--gold-400);
+    border-radius: 50%;
+    display: grid; place-items: center;
+    position: relative;
+    margin-bottom: 46px;
+    background: radial-gradient(circle at 35% 30%, rgba(227,196,99,0.25), transparent 62%);
+    box-shadow: 0 0 60px rgba(227,196,99,0.28);
+    animation: ringIn 0.95s cubic-bezier(.2,1.2,.35,1) 8.0s both;
+  }
+  #s3 .ring::before {
+    content: ""; position: absolute; inset: -14px;
+    border: 1.5px solid rgba(227,196,99,0.4);
+    border-radius: 50%;
+  }
+  #s3 .ring span {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 84px; font-weight: 700; color: var(--gold-300);
+    animation: fadeIn 0.6s ease 8.5s both;
+  }
+
+  #s3 .name {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 50px; font-weight: 700;
+    letter-spacing: 0.14em;
+    white-space: nowrap;
+    animation: trackIn 0.9s cubic-bezier(.2,.9,.3,1) 8.95s both;
+  }
+  #s3 .sub {
+    font-size: 30px; font-weight: 500;
+    letter-spacing: 0.62em; text-indent: 0.62em;
+    color: var(--cream-dim);
+    margin-top: 12px;
+    animation: fadeIn 0.65s ease 9.55s both;
+  }
+  #s3 .rule {
+    width: 150px; height: 1.5px;
+    background: linear-gradient(90deg, transparent, var(--gold-400), transparent);
+    margin: 30px 0 24px;
+    animation: fadeIn 0.6s ease 9.95s both;
+  }
+  #s3 .tagline {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic; font-size: 36px;
+    color: var(--gold-300);
+    animation: riseIn 0.7s ease 10.25s both;
+  }
+
+  /* ============================================================
+     SCENE 4 — SERVICES (12.4s – 17.5s)
+     ============================================================ */
+  #s4 { animation: fadeIn 0.45s ease 12.45s both, fadeOut 0.45s ease 17.05s both; justify-content: center; }
+
+  #s4 .head {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 54px; font-weight: 600;
+    margin-bottom: 44px;
+    animation: riseIn 0.65s ease 12.65s both;
+  }
+
+  #s4 ul { list-style: none; width: 100%; max-width: 470px; text-align: left; }
+  #s4 li {
+    display: flex; align-items: center; gap: 18px;
+    font-size: 22px; font-weight: 400;
+    white-space: nowrap;
+    padding: 19px 6px;
+    border-bottom: 1px dashed rgba(227,196,99,0.3);
+  }
+  #s4 li:last-child { border-bottom: 0; }
+  #s4 li .tick {
+    flex-shrink: 0;
+    width: 44px; height: 44px; border-radius: 50%;
+    display: grid; place-items: center;
+    background: linear-gradient(160deg, var(--gold-300), var(--gold-500));
+    color: var(--wood-900);
+    font-weight: 700; font-size: 24px;
+  }
+  #s4 li:nth-child(1) { animation: slideIn 0.55s cubic-bezier(.2,.9,.3,1) 13.15s both; }
+  #s4 li:nth-child(2) { animation: slideIn 0.55s cubic-bezier(.2,.9,.3,1) 13.80s both; }
+  #s4 li:nth-child(3) { animation: slideIn 0.55s cubic-bezier(.2,.9,.3,1) 14.45s both; }
+  #s4 li:nth-child(4) { animation: slideIn 0.55s cubic-bezier(.2,.9,.3,1) 15.10s both; }
+
+  #s4 .foot {
+    margin-top: 46px;
+    font-size: 20px; letter-spacing: 0.08em;
+    white-space: nowrap;
+    color: var(--gold-300);
+    animation: fadeIn 0.6s ease 15.9s both;
+  }
+
+  /* ============================================================
+     SCENE 5 — CTA (17.5s – 24s, holds to end)
+     ============================================================ */
+  #s5 { animation: fadeIn 0.5s ease 17.55s both; justify-content: center; }
+
+  #s5 .mini-ring {
+    width: 96px; height: 96px;
+    border: 2px solid var(--gold-400); border-radius: 50%;
+    display: grid; place-items: center;
+    margin-bottom: 34px;
+    animation: popIn 0.7s cubic-bezier(.2,1.3,.4,1) 17.75s both;
+  }
+  #s5 .mini-ring span {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 42px; font-weight: 700; color: var(--gold-300);
+  }
+
+  #s5 .cta-line {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 58px; font-weight: 600; font-style: italic;
+    margin-bottom: 44px;
+    animation: riseIn 0.7s ease 18.0s both;
+  }
+
+  #s5 .phone {
+    display: flex; align-items: center; gap: 16px;
+    white-space: nowrap;
+    animation: popIn 0.75s cubic-bezier(.2,1.2,.35,1) 18.6s both;
+  }
+  #s5 .phone svg { width: 46px; height: 46px; fill: var(--gold-400); }
+  #s5 .phone strong {
+    font-size: 54px; font-weight: 600; letter-spacing: 0.03em;
+    font-family: "Jost", sans-serif;
+  }
+
+  #s5 .wa-pill {
+    display: flex; align-items: center; gap: 14px;
+    margin-top: 30px;
+    padding: 17px 34px;
+    border-radius: 999px;
+    background: var(--wa);
+    color: #fff; font-size: 27px; font-weight: 500;
+    box-shadow: 0 12px 34px rgba(34,193,94,0.4);
+    animation: riseIn 0.6s ease 19.35s both;
+  }
+  #s5 .wa-pill svg { width: 34px; height: 34px; fill: #fff; }
+
+  #s5 .loc {
+    margin-top: 34px;
+    font-size: 26px; letter-spacing: 0.2em;
+    color: var(--cream-dim);
+    animation: fadeIn 0.6s ease 19.95s both;
+  }
+
+  #s5 .call-btn {
+    margin-top: 44px;
+    padding: 20px 62px;
+    border-radius: 999px;
+    background: linear-gradient(160deg, var(--gold-100), var(--gold-400) 55%, var(--gold-600));
+    color: var(--wood-900);
+    font-size: 30px; font-weight: 700; letter-spacing: 0.14em;
+    box-shadow: 0 14px 40px rgba(227,196,99,0.45);
+    animation: popIn 0.7s cubic-bezier(.2,1.3,.4,1) 20.6s both,
+               pulse 1.5s ease-in-out 21.4s infinite both;
+  }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="glow"></div>
+  <div class="frame"></div>
+
+  <!-- SCENE 1: hook -->
+  <section class="scene" id="s1">
+    <div class="drop">
+      <svg viewBox="0 0 24 24"><path d="M12 2.7S6 10 6 14a6 6 0 0 0 12 0c0-4-6-11.3-6-11.3zM12 18a4 4 0 0 1-4-4c0-.5.1-1 .3-1.6.5 2 2 3.6 3.7 3.6v2z"/></svg>
+    </div>
+    <h2>
+      <div class="l1">Leaking pipes?</div>
+      <div class="l2">Blocked drains?</div>
+      <div class="l3 gold-text"><em>Toilet running all night?</em></div>
+    </h2>
+  </section>
+
+  <!-- SCENE 2: message -->
+  <section class="scene" id="s2">
+    <h2>
+      <div class="m1">Stop patching it.</div>
+      <div class="m2 gold-text">Fix it properly.</div>
+    </h2>
+  </section>
+
+  <!-- SCENE 3: brand -->
+  <section class="scene" id="s3">
+    <div class="ring"><span>ST</span></div>
+    <div class="name gold-text">SAMMY-TECH</div>
+    <div class="sub">PLUMBING</div>
+    <div class="rule"></div>
+    <div class="tagline">Enugu&rsquo;s trusted plumbers</div>
+  </section>
+
+  <!-- SCENE 4: services -->
+  <section class="scene" id="s4">
+    <div class="head">We deal on<span class="gold-text">:</span></div>
+    <ul>
+      <li><span class="tick">✓</span> Water system installation</li>
+      <li><span class="tick">✓</span> Sink, bathtub &amp; toilet installation</li>
+      <li><span class="tick">✓</span> Plumbing repairs &amp; maintenance</li>
+      <li><span class="tick">✓</span> Pipe cutting, threading &amp; fitting</li>
+    </ul>
+    <div class="foot">Honest prices &bull; Guaranteed workmanship</div>
+  </section>
+
+  <!-- SCENE 5: CTA -->
+  <section class="scene" id="s5">
+    <div class="mini-ring"><span>ST</span></div>
+    <div class="cta-line">One call fixes it.</div>
+    <div class="phone">
+      <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
+      <strong class="gold-text">0701 251 8327</strong>
+    </div>
+    <div class="wa-pill">
+      <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.1 13.9c-.2.6-1.2 1.1-1.7 1.2-.4.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.6-1.1-4.3-3.8-4.4-4-.1-.2-1.1-1.4-1.1-2.7s.7-1.9.9-2.2c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.4l.9 2.1c.1.2.1.4 0 .6l-.4.6-.5.5c-.1.1-.3.3-.1.6.2.3.7 1.2 1.6 2 1.1 1 2 1.3 2.3 1.4.3.1.5.1.6-.1l.7-.9c.2-.2.4-.3.6-.2l2 .9c.2.1.4.2.4.3.1.1.1.5-.1 1z"/></svg>
+      WhatsApp: 0701 251 8327
+    </div>
+    <div class="loc">TRANS-EKULU &bull; ENUGU</div>
+    <div class="call-btn">CALL NOW</div>
+  </section>
+</div>
+
+<script>
+  // Deterministic frame rendering: pause every animation, then let the
+  // renderer seek the whole timeline to an exact millisecond per frame.
+  window.seekReady = document.fonts.ready.then(() => {
+    const anims = document.getAnimations();
+    anims.forEach(a => a.pause());
+    window.seek = (ms) => anims.forEach(a => { a.currentTime = ms; });
+    return anims.length;
+  });
+</script>
+</body>
+</html>
