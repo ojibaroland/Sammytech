@@ -64,75 +64,82 @@ updateOpenStatus();
 setInterval(updateOpenStatus, 60000);
 
 /* ---------- Service cards pre-select the form's service ---------- */
-document.querySelectorAll(".card-link[data-service]").forEach((link) => {
-  link.addEventListener("click", () => {
-    const select = document.getElementById("q-service");
-    const wanted = link.dataset.service.replace(/&amp;/g, "&");
-    [...select.options].forEach((opt) => {
-      if (opt.text.trim() === wanted) select.value = opt.value || opt.text;
+const selectService = document.getElementById("q-service");
+if (selectService) {
+  document.querySelectorAll(".card-link[data-service]").forEach((link) => {
+    link.addEventListener("click", () => {
+      const wanted = link.dataset.service.replace(/&amp;/g, "&");
+      [...selectService.options].forEach((opt) => {
+        if (opt.text.trim() === wanted) selectService.value = opt.value || opt.text;
+      });
     });
   });
-});
+}
 
 /* ---------- Quote form → WhatsApp / email ---------- */
 const form = document.getElementById("quote-form");
 const formError = document.getElementById("form-error");
 
-function readForm() {
-  return {
-    name: document.getElementById("q-name").value.trim(),
-    phone: document.getElementById("q-phone").value.trim(),
-    area: document.getElementById("q-area").value.trim(),
-    service: document.getElementById("q-service").value,
-    date: document.getElementById("q-date").value,
-    details: document.getElementById("q-details").value.trim(),
-  };
+if (form) {
+  function readForm() {
+    return {
+      name: document.getElementById("q-name").value.trim(),
+      phone: document.getElementById("q-phone").value.trim(),
+      area: document.getElementById("q-area").value.trim(),
+      service: document.getElementById("q-service").value,
+      date: document.getElementById("q-date").value,
+      details: document.getElementById("q-details").value.trim(),
+    };
+  }
+
+  function validate(data) {
+    const ok = data.name && data.phone && data.service && data.details;
+    formError.hidden = ok;
+    return ok;
+  }
+
+  function buildMessage(data) {
+    const lines = [
+      `Hello ${BUSINESS.name}, I'd like to request a quote.`,
+      ``,
+      `Name: ${data.name}`,
+      `Phone: ${data.phone}`,
+    ];
+    if (data.area) lines.push(`Area: ${data.area}`);
+    lines.push(`Service: ${data.service}`);
+    if (data.date) lines.push(`Preferred date: ${data.date}`);
+    lines.push(``, `Job description:`, data.details);
+    return lines.join("\n");
+  }
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const data = readForm();
+    if (!validate(data)) return;
+    const url =
+      "https://wa.me/" +
+      BUSINESS.whatsappNumber +
+      "?text=" +
+      encodeURIComponent(buildMessage(data));
+    window.open(url, "_blank", "noopener");
+  });
+
+  const emailFallback = document.getElementById("email-fallback");
+  if (emailFallback) {
+    emailFallback.addEventListener("click", () => {
+      const data = readForm();
+      if (!validate(data)) return;
+      const subject = `Quote request: ${data.service} — ${data.name}`;
+      window.location.href =
+        "mailto:" +
+        BUSINESS.email +
+        "?subject=" +
+        encodeURIComponent(subject) +
+        "&body=" +
+        encodeURIComponent(buildMessage(data));
+    });
+  }
 }
-
-function validate(data) {
-  const ok = data.name && data.phone && data.service && data.details;
-  formError.hidden = ok;
-  return ok;
-}
-
-function buildMessage(data) {
-  const lines = [
-    `Hello ${BUSINESS.name}, I'd like to request a quote.`,
-    ``,
-    `Name: ${data.name}`,
-    `Phone: ${data.phone}`,
-  ];
-  if (data.area) lines.push(`Area: ${data.area}`);
-  lines.push(`Service: ${data.service}`);
-  if (data.date) lines.push(`Preferred date: ${data.date}`);
-  lines.push(``, `Job description:`, data.details);
-  return lines.join("\n");
-}
-
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const data = readForm();
-  if (!validate(data)) return;
-  const url =
-    "https://wa.me/" +
-    BUSINESS.whatsappNumber +
-    "?text=" +
-    encodeURIComponent(buildMessage(data));
-  window.open(url, "_blank", "noopener");
-});
-
-document.getElementById("email-fallback").addEventListener("click", () => {
-  const data = readForm();
-  if (!validate(data)) return;
-  const subject = `Quote request: ${data.service} — ${data.name}`;
-  window.location.href =
-    "mailto:" +
-    BUSINESS.email +
-    "?subject=" +
-    encodeURIComponent(subject) +
-    "&body=" +
-    encodeURIComponent(buildMessage(data));
-});
 
 /* ---------- Scroll reveal ---------- */
 const revealEls = document.querySelectorAll(".reveal");
